@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package secr.dispatch.api;
+
+option cc_generic_services = true;
+option cc_enable_arenas = true;
+
+/// Carry a nested exception across a comms link
+message Exception
+{
+	string name = 1;
+	string what = 2;
+	Exception nested = 3;
+}
+
+message ExceptionList
+{
+    repeated Exception exceptions = 1;
+}
+
+
+

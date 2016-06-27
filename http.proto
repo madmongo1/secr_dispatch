@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package secr.dispatch.api;
+
+option cc_generic_services = true;
+option cc_enable_arenas = true;
+
+/// Carry a nested exception across a comms link
+message HttpHeader
+{
+	string method = 1;
+	string query = 2;
+    int32 version_major = 3;
+    int32 version_minor = 4;
+	map<string,string> headers = 5;
+}
+
+message AcceptMetaData
+{
+    message MediaRange
+    {
+        string first = 1;
+        string last = 2;
+        double q = 3;
+        map<string, string> parameters = 4;
+    }
+}
+
+message HttpServerHeader
+{
+    HttpHeader raw_header = 1;
+    
+    AcceptMetaData accept_meta_data = 2;
+    
+}

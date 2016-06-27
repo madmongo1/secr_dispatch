@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+package secr.testing;
+
+option cc_generic_services = true;
+option cc_enable_arenas = true;
+
+message IntPair
+{
+    int32 x = 1;
+    int32 y = 2;
+}
+
+message Int
+{
+    int32 z = 1;
+}
+
+message TestParams
+{
+    bool async = 1;
+    bool completes = 2;
+    bool invoke_throws = 3;
+    bool sets_error = 4;
+}
+
+message TestResult
+{
+    
+}
+
+ 
+
+service TestService
+{
+    /// complete with result synchronously. no exception.
+    rpc complete_sync (IntPair) returns (Int);
+
+    /// complete with result asynchronously. no exception.
+    rpc complete_async_after_delay (IntPair) returns (Int);
+
+    /// throw an exception when invoked - never complete
+    rpc sync_throw_nocomplete (IntPair) returns (Int);
+
+    /// throw an exception when invoked - never complete
+    rpc sync_throw_after_complete (IntPair) returns (Int);
+    
+    ///
+    rpc parameterised_test (TestParams) returns (TestResult);
+}

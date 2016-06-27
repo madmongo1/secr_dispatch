@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package secr.dispatch.test;
+
+option cc_generic_services = true;
+option cc_enable_arenas = true;
+
+/// Carry a nested exception across a comms link
+
+message Array
+{
+    repeated int32 ints = 1;
+    repeated string strings = 2;
+
+}

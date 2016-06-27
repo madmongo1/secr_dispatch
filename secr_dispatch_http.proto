@@ -1,0 +1,88 @@
+syntax = "proto3";
+
+package secr.dispatch.http;
+
+option cc_generic_services = true;
+option cc_enable_arenas = true;
+
+/// Carry a nested exception across a comms link
+
+message Header
+{
+    string name = 1;
+    string value = 2;
+}
+
+message Token
+{
+    string name = 1;
+    string value = 2;
+}
+
+message AcceptMetaData
+{
+    message MediaRange
+    {
+        string type = 1;
+        string subtype = 2;
+        double q = 3;
+        repeated Token tokens = 4;
+    }
+    
+    repeated MediaRange media_ranges = 1;
+}
+
+message Parameter
+{
+    string name = 1;
+    string value = 2;
+}
+
+message ContentType
+{
+    string type = 1;
+    string subtype = 2;
+    repeated Parameter parameters = 3;
+}
+
+message HttpRequestHeader
+{
+    message QueryParts
+    {
+        string schema = 1;
+        string host = 2;
+        string port = 3;
+        string path = 4;
+        string query = 5;
+        string fragment = 6;
+        string user_info = 7;
+    }
+    
+    // raw data
+    string          method = 1;
+    string          uri = 2;
+    int32           version_major = 3;
+    int32           version_minor = 4;
+
+    repeated Header headers = 5;
+
+    // interpreted data
+    QueryParts      query = 6;
+}
+
+
+message HttpResponseHeader
+{
+    message ResponseStatus
+    {
+        int32 code = 1;
+        string message = 2;
+    }
+
+    ResponseStatus  status = 1;
+    int32           version_major = 2;
+    int32           version_minor = 3;
+    repeated Header headers = 4;
+}
+
+
